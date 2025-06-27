@@ -1,0 +1,1 @@
+![Flowchart](../user-story-map/Screenshot-2025-04-22-093247.png)

@@ -1,0 +1,37 @@
+@startuml Keycloak Fallover Scenario
+
+actor User
+participant "HaProxy" as HA
+participant "Keycloak\nPrimary" as KP
+participant "Keycloak\nSecondary" as KS
+database "PostgreSQL" as DB
+
+== Normal Operation ==
+User -> HA: Access request
+HA -> KP: Route request
+KP -> DB: Read/Write data
+DB --> KP: Data response
+KP --> HA: Service response
+HA --> User: Response
+
+== Primary Instance Failure ==
+note over KP: Primary instance fails
+HA -> KP: Health check
+note over HA: Health check fails
+HA -> KS: Route request to secondary
+KS -> DB: Read/Write data
+DB --> KS: Data response
+KS --> HA: Service response
+HA --> User: Response
+
+== Recovery ==
+note over KP: Primary instance recovers
+HA -> KP: Health check
+note over HA: Health check succeeds
+HA -> KP: Resume routing
+KP -> DB: Read/Write data
+DB --> KP: Data response
+KP --> HA: Service response
+HA --> User: Response
+
+@enduml

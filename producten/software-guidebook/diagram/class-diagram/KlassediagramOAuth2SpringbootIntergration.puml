@@ -1,0 +1,47 @@
+@startuml
+frame "Klassendiagram – OAuth2 Spring Boot" {
+
+    class CustomOidcUserController {
+        +home() : String
+        +securePage(oidcUser: OidcUser) : String
+        +logout(request: HttpServletRequest, response: HttpServletResponse) : void
+        +roles(oidcUser: OidcUser) : String
+        +userInfo(user: OidcUser) : Map<String, Object>
+        +adminPage() : String
+    }
+
+    class SecurityConfig {
+        -customOidcUserService: CustomOidcUserService
+        +SecurityConfig(customOidcUserService: CustomOidcUserService)
+        +securityFilterChain(http: HttpSecurity) : SecurityFilterChain
+    }
+
+    class CustomOidcUserService {
+        +loadUser(userRequest: OidcUserRequest) : OidcUser
+    }
+
+    class OidcUserService {
+        +loadUser(userRequest: OidcUserRequest) : OidcUser
+    }
+
+    interface OidcUser
+
+    class DefaultOidcUser {
+        +getClaims() : Map<String, Object>
+        +getIdToken()
+        +getUserInfo()
+    }
+
+    class SimpleGrantedAuthority {
+        +SimpleGrantedAuthority(role: String)
+    }
+
+    ' Relaties
+    CustomOidcUserService --|> OidcUserService
+    DefaultOidcUser ..|> OidcUser
+    CustomOidcUserService --> DefaultOidcUser
+    CustomOidcUserService --> SimpleGrantedAuthority
+    SecurityConfig --> CustomOidcUserService
+    CustomOidcUserController --> OidcUser
+}
+@enduml

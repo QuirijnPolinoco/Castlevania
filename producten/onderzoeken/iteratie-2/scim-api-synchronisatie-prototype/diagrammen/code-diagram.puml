@@ -1,0 +1,29 @@
+@startuml SCIM/API synchronisatie prototype - C4 code diagram
+
+skinparam classAttributeIconSize 0
+
+class GiteaSyncController {
+    - GiteaSyncService syncService
+    + GiteaSyncController(GiteaSyncService syncService)
+    + ResponseEntity<String> syncGitea()
+}
+
+class GiteaSyncService {
+    + {static} String KEYCLOAK_USERNAME
+    + {static} String KEYCLOAK_PASSWORD
+    + {static} String KEYCLOAK_BASE_URL
+    + {static} String REALM
+
+    + {static} String GITEA_BASE_URL
+    + {static} String ORGANIZATION
+    + {static} String GITEA_USER
+    + {static} String GITEA_PASSWORD
+
+    - RestTemplate restTemplate
+
+    + void syncGroupsToGitea()
+}
+
+GiteaSyncController --> GiteaSyncService
+
+@enduml

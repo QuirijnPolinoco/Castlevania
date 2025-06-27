@@ -1,0 +1,14 @@
+@startuml SCIM/API synchronisatie prototype - sequence diagram
+
+autonumber
+
+actor Admin
+participant GiteaSyncController
+participant GiteaSyncService
+
+Admin -> GiteaSyncController : POST /sync-gitea
+GiteaSyncController -> GiteaSyncService : syncGroupsToGitea()
+GiteaSyncService -> GiteaSyncController : status message (String)
+GiteaSyncController -> Admin : ResponseEntity<String>
+
+@enduml

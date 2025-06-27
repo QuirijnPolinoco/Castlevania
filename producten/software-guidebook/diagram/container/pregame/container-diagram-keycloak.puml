@@ -1,0 +1,36 @@
+@startuml Container Diagram - Keycloak IAM Solution
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container Diagram voor Centrale IAM-oplossing met Keycloak
+
+Person(employee, "Medewerker", "Organisatie medewerker die toegang nodig heeft tot verschillende applicaties")
+Person(admin, "IAM Administrator", "Beheert gebruikers en rollen")
+
+System_Boundary(iam_system, "IAM Systeem") {
+    Container(keycloak, "Keycloak", "IAM Platform", "Centrale authenticatie- en autorisatieserver")
+    ContainerDb(keycloak_db, "Keycloak Database", "PostgreSQL", "Opslag voor gebruikers, rollen en configuraties")
+}
+
+System_Ext(google, "Google Workspace", "Cloud diensten (Drive, Calendar)")
+System_Ext(nexus, "Nexus", "Artifact repository")
+System_Ext(jenkins, "Jenkins", "CI/CD platform")
+System_Ext(gitea, "Gitea", "Git repository")
+System_Ext(atlassian, "Atlassian Suite", "Confluence & Jira")
+
+' Authenticatie relaties
+Rel(employee, keycloak, "Authenticeert via", "HTTPS")
+Rel(keycloak, google, "SSO via", "OAuth2/OIDC")
+Rel(keycloak, nexus, "SSO via", "OIDC")
+Rel(keycloak, jenkins, "SSO via", "OIDC")
+Rel(keycloak, gitea, "SSO via", "OAuth2")
+Rel(keycloak, atlassian, "SSO via", "SAML 2.0")
+
+' Beheer relaties
+Rel(admin, keycloak, "Beheert gebruikers en rollen", "HTTPS")
+
+' Database relatie
+Rel(keycloak, keycloak_db, "Leest van/schrijft naar", "JDBC")
+
+@enduml

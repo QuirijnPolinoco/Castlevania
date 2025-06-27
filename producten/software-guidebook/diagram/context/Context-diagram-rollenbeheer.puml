@@ -1,0 +1,38 @@
+@startuml
+' convert it with additional command line argument -DRELATIVE_INCLUDE="./.." to use locally
+!if %variable_exists("RELATIVE_INCLUDE")
+  !include %get_variable_value("RELATIVE_INCLUDE")/C4_Container.puml
+!else
+  !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!endif
+
+SHOW_PERSON_OUTLINE()
+
+AddRelTag("sync/async", $textColor=$ARROW_FONT_COLOR, $lineColor=$ARROW_COLOR, $lineStyle=DottedLine())
+
+title Context diagram voor het Rollenbeheer systeem
+
+Person(admin, Admin, "Een persoon die de rol van admin heeft en verantwoordelijk is voor het beheren van de rollen binnen het systeem.")
+Person(hr, "HR-medewerker", "Een persoon vanuit HR die ook rollen en rechten beheert binnen het systeem.")
+
+System(rollenbeheer, Rollenbeheer, "Een rollenbeheer systeem")
+
+System_Ext(keycloak, "Keycloak", "Een user identifier die organisaties helpt om hun gebruikers te beheren vanuit verschillende platformen.")
+System_Ext(google, "Google", "Alle Googleservices zoals Google Drive, Google Docs, etc.")
+System_Ext(nexus, "Nexus", "Een repository manager voor het opslaan van software artifacts.")
+System_Ext(jenkins, "Jenkins", "Een open-source automation server die helpt bij het automatiseren van delen van de software development lifecycle.")
+System_Ext(gitea, "Gitea", "Een zelf-gehoste Git service voor het beheren van Git repositories.")
+System_Ext(atlassian, "Atlassian", "Een suite van software tools voor projectmanagement en samenwerking, zoals Jira en Confluence.")
+
+admin --> rollenbeheer : "Beheert rollen en rechten via"
+hr --> rollenbeheer : "Beheert rollen en rechten via"
+
+rollenbeheer --> keycloak : "Veranderd rechten in"
+rollenbeheer --> google : "Veranderd rechten in"
+rollenbeheer --> nexus : "Veranderd rechten in"
+rollenbeheer --> jenkins : "Veranderd rechten in"
+rollenbeheer --> gitea : "Veranderd rechten in"
+rollenbeheer --> atlassian : "Veranderd rechten in"
+
+SHOW_LEGEND()
+@enduml

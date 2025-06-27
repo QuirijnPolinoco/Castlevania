@@ -1,0 +1,38 @@
+@startuml Container Diagram - Custom IAM Solution
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container Diagram voor Custom IAM-oplossing met Spring Boot en Vue3
+
+Person(employee, "Medewerker", "Organisatie medewerker die toegang nodig heeft tot verschillende applicaties")
+Person(admin, "IAM Administrator", "Beheert gebruikers en rollen")
+
+System_Boundary(custom_iam, "Custom IAM Systeem") {
+    Container(vue_app, "IAM Frontend", "Vue3", "Web interface voor gebruikersbeheer en authenticatie")
+    Container(spring_backend, "IAM Backend", "Spring Boot", "REST API voor gebruikers- en rollenbeheer, inclusief OAuth2 authenticatie")
+    ContainerDb(iam_db, "IAM Database", "PostgreSQL", "Opslag voor gebruikers, rollen en configuraties")
+}
+
+System_Ext(google, "Google Workspace", "Cloud diensten (Drive, Calendar)")
+System_Ext(nexus, "Nexus", "Artifact repository")
+System_Ext(jenkins, "Jenkins", "CI/CD platform")
+System_Ext(gitea, "Gitea", "Git repository")
+System_Ext(atlassian, "Atlassian Suite", "Confluence & Jira")
+
+' Frontend relaties
+Rel(employee, vue_app, "Gebruikt", "HTTPS")
+Rel(admin, vue_app, "Beheert", "HTTPS")
+Rel(vue_app, spring_backend, "API calls", "REST/HTTPS")
+
+' Backend relaties
+Rel(spring_backend, iam_db, "Leest van/schrijft naar", "JDBC")
+
+' OAuth Server relaties
+Rel(spring_backend, google, "Autoriseert toegang via", "OAuth2")
+Rel(spring_backend, nexus, "Autoriseert toegang via", "OAuth2")
+Rel(spring_backend, jenkins, "Autoriseert toegang via", "OAuth2")
+Rel(spring_backend, gitea, "Autoriseert toegang via", "OAuth2")
+Rel(spring_backend, atlassian, "Autoriseert toegang via", "OAuth2")
+
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+
+
+
+    package "domain" {
+        class UserData {
+            +name: String
+            +email: String
+        }
+    }
+
+    package "controller" {
+        class DataTransferController {
+            -keycloakUserService: KeycloakUserService
+            -jiraUserParser: JiraUserParser
+            +transferJiraData(): List<UserData>
+        }
+    }
+
+    package "service" {
+        class KeycloakUserService {
+            -restTemplate: RestTemplate
+            -KEYCLOAK_URL: String
+            -ADMIN_USERNAME: String
+            -ADMIN_PASSWORD: String
+            -CLIENT_ID: String
+            -REALM: String
+            +createUser(UserData userData)
+            -getAccessToken(): String
+        }
+    }
+
+    package "JsonParser" {
+        class JiraUserParser {
+            +parseUsers(String json): List<UserData>
+        }
+    }
+
+
+DataTransferController --> KeycloakUserService
+DataTransferController --> JiraUserParser
+DataTransferController --> UserData
+JiraUserParser --> UserData
+KeycloakUserService --> UserData
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml Keycloak Fallback Architecture
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "User", "End user accessing the system")
+
+System_Boundary(keycloak_system, "Keycloak Fallback System") {
+    Container(ha_proxy, "HaProxy", "Load Balancer", "Routes traffic and handles failover")
+    Container(keycloak_primary, "Keycloak Primary", "Authentication Server", "Primary Keycloak instance")
+    Container(keycloak_secondary, "Keycloak Secondary", "Authentication Server", "Secondary Keycloak instance")
+    ContainerDb(postgres, "PostgreSQL", "Database", "Shared database for both instances")
+}
+
+Rel(user, ha_proxy, "Accesses", "HTTP")
+Rel(ha_proxy, keycloak_primary, "Routes traffic", "HTTP")
+Rel(ha_proxy, keycloak_secondary, "Routes traffic", "HTTP")
+Rel(keycloak_primary, postgres, "Reads/Writes", "JDBC")
+Rel(keycloak_secondary, postgres, "Reads/Writes", "JDBC")
+
+@enduml

@@ -1,0 +1,50 @@
+# Logboek Projectweek 2
+
+> [!TIP]
+> [Gebruik deze handige plugin voor het invullen van markdown tabellen in vscode](https://marketplace.visualstudio.com/items?itemName=zaaack.markdown-editor)
+>
+> [Hier kun je een cheatsheet met alle GitHub emojis vinden](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md)
+
+## Maandag 21 april
+
+> Vrij
+
+
+## Dinsdag 22 april
+
+| Tijd | Met Wie | Taak | Resultaat | Emoji | Link |
+| :----- | --------- | --------- | ----------- | ------- | ------ |
+| 1 uur | Yousif | Container diagram Keycloak | Container diagram gemaakt voor de keycloak implementatie, wat komt erbij kijken en hoe werkt keycloak in zijn eigen systeem. welke externe services moeten hiermee connecten. ik ben hier tevreden over omdat het redelijk snel goed ging. ik was niet te lang bezig met het opzetten van de basis en te controleren hoe keycloak in elkaar zit | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/e1a26d573c80d4db21510536311b5e2a29b54b93), [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107387338&issue=AIM-ENE-feb25%7Ccastlevania%7C34) |
+| 1 uur | Yousif | Container diagram Custom IAM | Container diagram gemaakt voor de custom IAM. hierbij kon ik veel overnemen van de keycloak implementatie alleen moest ik wat extra dingen toevoegen. zoals een Oauth service en auth server | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/e1a26d573c80d4db21510536311b5e2a29b54b93), [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107387903&issue=AIM-ENE-feb25%7Ccastlevania%7C35) |
+| 0,5 uur | Team | Voorbereiding domein expert gesprek | de opzet was stroef. was weinig inniatief vanuit het team om te beginnen hiermee. ik bleef daarom ook maar bezig met de diagrammen. ook tijdens het gesprek leek er weinig voorgang en meningen te zijn. | Ontevreden | - |
+| 2 uur | Domein expert + team | Domein expert gesprek | Uitgebreid gesprek gevoerd met de domein expert over de requirements en context. Veel waardevolle informatie verzameld. Duidelijk zicht gekregen hoe het domein er nu uit ziet en ook wat voor een visie hij heeft. | tevreden | - |
+| 1,5 uur | Alleen | Acceptatiecriteria spike | Acceptatiecriteria opgesteld voor mijn spike. Duidelijke en meetbare criteria gedefinieerd die goed aansluiten op mijn spike. | tevreden | [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107398632&issue=AIM-ENE-feb25%7Ccastlevania%7C39) |
+
+## Woensdag 23 april
+
+
+| Tijd | Met Wie | Taak | Resultaat | Emoji | Link |
+| :----- | --------- | --------- | ----------- | ------- | ------ |
+| 1,5 uur | Team + Sander Leer | Meeting met Begeleider | Besproken welke spikes we hebben, de casus en tijdsinschatting. Duidelijke richting gekregen voor de komende periode. De meeting was productief en gaf ons een goed beeld van wat er van ons verwacht wordt. | tevreden | - |
+| 0,5 uur | Alleen | RBAC Research - Google Workspace | Uitgebreid onderzoek gedaan naar rolbeheer in Google Workspace. De documentatie was zeer uitgebreid en duidelijk. Het was goed te begrijpen hoe het rolbeheer werkt en wat de mogelijkheden zijn. De granulariteit van rechten en flexibiliteit in roltoewijzing waren indrukwekkend. | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/76f594520d1635195695857c86aa0bd98f31e492), [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107398632&issue=AIM-ENE-feb25%7Ccastlevania%7C39) |
+| 1 uur | Alleen | RBAC Research - Nexus Repository | Onderzocht rolbeheer in Nexus Repository. De documentatie was duidelijk en de API ondersteuning was goed gedocumenteerd. Het was interessant om te zien hoe Nexus Repository omgaat met rolbeheer op verschillende niveaus (repository, repository groep, globaal). | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/76f594520d1635195695857c86aa0bd98f31e492), [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107398632&issue=AIM-ENE-feb25%7Ccastlevania%7C39) |
+| 1 uur | Alleen | RBAC Research - Jenkins | Onderzocht rolbeheer in Jenkins. De plugin-architectuur was goed gedocumenteerd en de granulariteit van rechten was indrukwekkend. Het was duidelijk hoe Jenkins omgaat met project-specifieke rollen en globale rollen. | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/76f594520d1635195695857c86aa0bd98f31e492), [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107398632&issue=AIM-ENE-feb25%7Ccastlevania%7C39) |
+| 1 uur | Alleen | RBAC Research - Gitea | Onderzocht rolbeheer in Gitea. De integratie van organisatie en repository rollen was goed gedocumenteerd. Het was duidelijk hoe Gitea omgaat met roltoewijzing op verschillende niveaus en hoe dit geïntegreerd is met teams en organisaties. | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/76f594520d1635195695857c86aa0bd98f31e492), [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107398632&issue=AIM-ENE-feb25%7Ccastlevania%7C39) |
+| 0,5 uur | Alleen | RBAC Research - Atlassian Producten | Onderzocht rolbeheer in Jira/Confluence. De documentatie was uitgebreid en duidelijk. Het was interessant om te zien hoe Atlassian omgaat met project-specifieke rollen en hoe dit geïntegreerd is tussen verschillende producten. | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/76f594520d1635195695857c86aa0bd98f31e492), [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107398632&issue=AIM-ENE-feb25%7Ccastlevania%7C39) |
+| 2 uur | Alleen | Keycloak RBAC Analyse | Diepgaande analyse van Keycloak's RBAC implementatie. De documentatie was zeer uitgebreid en goed gestructureerd. Het was duidelijk hoe Keycloak omgaat met realms, clients en verschillende roltypes. De mogelijkheden voor composite roles en role inheritance waren indrukwekkend. | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/76f594520d1635195695857c86aa0bd98f31e492), [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107398632&issue=AIM-ENE-feb25%7Ccastlevania%7C39) |
+
+## Donderdag 24 april
+
+| Tijd | Met Wie | Taak | Resultaat | Emoji | Link |
+| :----- | --------- | --------- | ----------- | ------- | ------ |
+| 1 uur | Team | Voorbereiding PvA assessment | Samen met het team de PvA doorgenomen om te kijken wat alles inhoudt en of we nog iets misten. Goede discussie over de inhoud van elk hoofdstuk en de samenhang tussen verschillende onderdelen. Ik ben tevreden omdat we een goed overzicht hadden van wat er in het document staat en wat de belangrijkste punten zijn. | tevreden | - |
+| 1 uur | Team + Begeleiders | Meeting PvA assessment | Meeting gehad over de PvA met de begeleiders. Er werd veel aandacht besteed aan kleine details die er weinig toe doen, zoals de exacte definitie van hoofdstukken. De beoordeling voelde inconsistent en niet praktisch gericht. Ik ben ontevreden omdat de focus lag op theoretische details in plaats van praktische toepasbaarheid tijdens de stage. Het gaat erom dat we het straks goed kunnen toepassen, niet dat we de definitie op de dot goed hebben - daar bestaat Google voor. | ontevreden | - |
+| 4,5 uur | Alleen | PvA verbeteren | Uitgebreid gewerkt aan het verbeteren van de PvA op basis van de notulen uit de assessment. Ondanks mijn ontevredenheid over de beoordeling heb ik de feedback zorgvuldig verwerkt. Ik ben tevreden omdat ik de verbeteringen goed heb kunnen implementeren en het document nu nog beter is geworden. | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/67bda2560a5123f391e2916880192329f1317445), [Pull Request](https://github.com/AIM-ENE-feb25/castlevania/pull/53) |
+
+## Vrijdag 25 april
+
+| Tijd | Met Wie | Taak | Resultaat | Emoji | Link |
+| :----- | --------- | --------- | ----------- | ------- | ------ |
+| 3,5 uur | Alleen | Keycloak RBAC Documentatie | Uitgebreide documentatie gemaakt over Keycloak's RBAC implementatie. Gedetailleerd beschreven hoe realms, clients, roles en permissions werken. Ook de role inheritance en composite roles zijn goed gedocumenteerd. Ik ben tevreden omdat de Keycloak documentatie zeer uitgebreid en goed gestructureerd was, wat het makkelijk maakte om een duidelijk overzicht te maken. Het enige wat beter had gekund was meer praktische voorbeelden in hun documentatie over hoe je bepaalde RBAC scenario's implementeert. | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/9d498840242a5bc85adcf25e28bc45139ba2c1c6), [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107398632&issue=AIM-ENE-feb25%7Ccastlevania%7C39) |
+| 2,5 uur | Alleen | Keycloak Nested Roles Analyse | Diepgaande analyse gemaakt van Keycloak's ondersteuning voor nested roles. Gedocumenteerd hoe composite roles werken, de verschillende types roles, en de implementatie details. Ook de use cases en beperkingen zijn beschreven. Ik ben tevreden omdat het concept van nested roles in Keycloak erg intuïtief was en goed aansluit bij hoe je zou verwachten dat role inheritance werkt. | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/9d498840242a5bc85adcf25e28bc45139ba2c1c6), [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107398632&issue=AIM-ENE-feb25%7Ccastlevania%7C39) |
+| 2 uur | Alleen | Keycloak RBAC Integratie Onderzoek | Onderzocht hoe Keycloak's RBAC systeem kan worden geïntegreerd met andere systemen. De API support, protocol support en integration features zijn gedocumenteerd. Ik ben tevreden omdat Keycloak's integratie mogelijkheden erg flexibel zijn en goed gedocumenteerd. | tevreden | [Commit](https://github.com/AIM-ENE-feb25/castlevania/commit/9d498840242a5bc85adcf25e28bc45139ba2c1c6), [Issue](https://github.com/orgs/AIM-ENE-feb25/projects/6/views/2?pane=issue&itemId=107398632&issue=AIM-ENE-feb25%7Ccastlevania%7C39) |

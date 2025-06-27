@@ -1,0 +1,50 @@
+@startuml Container Diagram - Keycloak IAM Solution
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container Diagram voor Centrale IAM-oplossing met Keycloak
+
+Person(employee, "Medewerker", "Organisatie medewerker die toegang nodig heeft tot verschillende applicaties")
+Person(admin, "IAM Administrator", "Beheert gebruikers en rollen")
+
+System_Boundary(iam_system, "IAM Systeem") {
+    Container(ha_proxy, "HaProxy", "Load Balancer", "Routes traffic and handles failover")
+    Container(keycloak_primary, "Keycloak Primary", "IAM Platform", "Primary authentication server")
+    Container(keycloak_secondary, "Keycloak Secondary", "IAM Platform", "Secondary authentication server")
+    ContainerDb(keycloak_db, "Keycloak Database", "PostgreSQL", "Opslag voor gebruikers, rollen en configuraties")
+}
+
+
+System_Ext(google, "Google Workspace", "Cloud diensten (Drive, Calendar)")
+System_Ext(nexus, "Nexus", "Artifact repository")
+System_Ext(jenkins, "Jenkins", "CI/CD platform")
+System_Ext(gitea, "Gitea", "Git repository")
+System_Ext(atlassian, "Atlassian Suite", "Confluence & Jira")
+System_Ext(springboot_app, "Spring Boot Application", "Maakt gebruik van Keycloak voor authenticatie via OIDC, imports en exports data naar en van keycloak")
+
+' Authenticatie relaties
+Rel(employee, ha_proxy, "Authenticeert via", "HTTPS")
+Rel(admin, ha_proxy, "Beheert via", "HTTPS")
+Rel(ha_proxy, keycloak_primary, "Routes traffic", "HTTP")
+Rel(ha_proxy, keycloak_secondary, "Routes traffic", "HTTP")
+
+Rel(keycloak_primary, google, "SSO via", "OAuth2/OIDC")
+Rel(keycloak_primary, nexus, "SSO via", "OIDC")
+Rel(keycloak_primary, jenkins, "SSO via", "OIDC")
+Rel(keycloak_primary, gitea, "SSO via", "OAuth2")
+Rel(keycloak_primary, atlassian, "SSO via", "SAML 2.0")
+Rel(keycloak_primary, springboot_app, "SSO via", "OIDC")
+
+Rel(keycloak_secondary, google, "SSO via", "OAuth2/OIDC")
+Rel(keycloak_secondary, nexus, "SSO via", "OIDC")
+Rel(keycloak_secondary, jenkins, "SSO via", "OIDC")
+Rel(keycloak_secondary, gitea, "SSO via", "OAuth2")
+Rel(keycloak_secondary, atlassian, "SSO via", "SAML 2.0")
+Rel(keycloak_secondary, springboot_app, "SSO via", "OIDC")
+
+' Database relaties
+Rel(keycloak_primary, keycloak_db, "Leest van/schrijft naar", "JDBC")
+Rel(keycloak_secondary, keycloak_db, "Leest van/schrijft naar", "JDBC")
+
+@enduml

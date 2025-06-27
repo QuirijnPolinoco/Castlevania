@@ -1,0 +1,167 @@
+{
+  "RBAC_Model": {
+    "roles": [
+      {
+        "name": "Administrator",
+        "permissions": [
+          "beheer_gebruikers",
+          "instellingen_wijzigen",
+          "systeem_monitoren",
+          "beveiliging_toepassen"
+        ],
+        "subroles": [
+          {
+            "name": "Systeembeheerder",
+            "permissions": [
+              "volledige_toegang",
+              "gebruikersbeheer",
+              "veiligheidsopties"
+            ]
+          },
+          {
+            "name": "Applicatiebeheerder",
+            "permissions": [
+              "applicatie_instellingen",
+              "gebruikersrechten_beheren"
+            ]
+          },
+          {
+            "name": "Beveiligingsbeheerder",
+            "permissions": [
+              "toegangscontrole",
+              "auditlogs_bekijken",
+              "beveiliging_configureren"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ontwikkelaar",
+        "permissions": [
+          "code_schrijven",
+          "code_review",
+          "tests_uitvoeren",
+          "integraties_maken"
+        ],
+        "subroles": [
+          {
+            "name": "Backend Developer",
+            "permissions": [
+              "server_side_code",
+              "api_toegang"
+            ]
+          },
+          {
+            "name": "Frontend Developer",
+            "permissions": [
+              "gebruikersinterface_bewerken"
+            ]
+          },
+          {
+            "name": "Full-Stack Developer",
+            "permissions": [
+              "backend_toegang",
+              "frontend_toegang"
+            ]
+          },
+          {
+            "name": "DevOps Engineer",
+            "permissions": [
+              "CI/CD_beheren",
+              "monitoring_toegang"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Projectleider",
+        "permissions": [
+          "project_planning",
+          "team_coördinatie",
+          "voortgang_rapporteren"
+        ],
+        "subroles": [
+          {
+            "name": "Product Owner",
+            "permissions": [
+              "product_backlog_beheren",
+              "features_prioriteren"
+            ]
+          },
+          {
+            "name": "Scrum Master",
+            "permissions": [
+              "proces_faciliteren",
+              "team_ondersteunen"
+            ]
+          },
+          {
+            "name": "Project Manager",
+            "permissions": [
+              "projectvoortgang_bewaken",
+              "planning_rapporteren"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Operationele Gebruiker",
+        "permissions": [
+          "data_invoeren",
+          "rapportages_bekijken",
+          "operationele_processen_monitoren"
+        ],
+        "subroles": [
+          {
+            "name": "Supportmedewerker",
+            "permissions": [
+              "gebruikersondersteuning",
+              "probleemregistratie"
+            ]
+          },
+          {
+            "name": "Systeemmonitor",
+            "permissions": [
+              "dashboard_toegang",
+              "logs_inzien"
+            ]
+          },
+          {
+            "name": "Servicedesk Medewerker",
+            "permissions": [
+              "vragen_beantwoorden",
+              "incidenten_registreren"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Gast/Externe Gebruiker",
+        "permissions": [
+          "publieke_data_inzien"
+        ],
+        "subroles": [
+          {
+            "name": "Gastgebruiker",
+            "permissions": [
+              "publieke_content_bekijken"
+            ]
+          },
+          {
+            "name": "Externe Samenwerker",
+            "permissions": [
+              "projectinhoud_bekijken"
+            ]
+          },
+          {
+            "name": "Adviseur/Consultant",
+            "permissions": [
+              "rapporten_lezen",
+              "feedback_geven"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

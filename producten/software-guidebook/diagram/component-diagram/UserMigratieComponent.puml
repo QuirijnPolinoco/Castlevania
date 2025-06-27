@@ -1,0 +1,33 @@
+@startuml
+!define RECTANGLE class
+skinparam componentStyle rectangle
+skinparam ArrowColor DarkSlateGray
+skinparam ComponentBorderColor Black
+skinparam ComponentBackgroundColor White
+skinparam sequenceArrowThickness 1
+
+title Dynamic Component Diagram - User Data Transfer (Numbered)
+
+actor Admin
+
+component "Spring Boot App" as SBA {
+  [transferJiraData()\nREST Endpoint]
+  [UserDataService]
+}
+
+component "Jira" as Jira
+component "Keycloak" as Keycloak
+
+
+Admin -> [transferJiraData()\nREST Endpoint] : (1) POST /transferJiraData
+
+[transferJiraData()\nREST Endpoint] --> [UserDataService] : (2) fetchJiraUsers()
+[UserDataService] --> Jira : (3) GET /users
+Jira --> [UserDataService] : (4) User Data
+
+[transferJiraData()\nREST Endpoint] --> Keycloak : (5) POST /auth/token
+Keycloak --> [transferJiraData()\nREST Endpoint] : (6) Admin Token
+
+[transferJiraData()\nREST Endpoint] --> Keycloak : (7) POST /users (with token)
+
+@enduml

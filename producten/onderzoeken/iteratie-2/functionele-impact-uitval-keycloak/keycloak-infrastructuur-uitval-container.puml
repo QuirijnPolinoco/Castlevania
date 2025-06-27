@@ -1,0 +1,54 @@
+@startuml Keycloak Infrastructure - Container Level
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Keycloak Infrastructure - Container Level
+
+Container_Boundary(keycloak_system, "Keycloak System") {
+    Container(load_balancer, "Load Balancer", "HAProxy", "SSL Termination, Health Checks, Rate Limiting")
+    
+    Container_Boundary(keycloak_cluster, "Keycloak Cluster") {
+        Container(keycloak1, "Keycloak Instance 1", "Java", "Authentication & Authorization")
+        Container(keycloak2, "Keycloak Instance 2", "Java", "Authentication & Authorization")
+    }
+    
+    Container_Boundary(db_cluster, "MongoDB Cluster") {
+        Container(mongodb1, "MongoDB Primary", "MongoDB", "Document Storage")
+        Container(mongodb2, "MongoDB Secondary", "MongoDB", "Document Replication")
+    }
+    
+    Container_Boundary(cache_cluster, "Redis Cluster") {
+        Container(redis1, "Redis Master", "Redis", "Session Management")
+        Container(redis2, "Redis Replica", "Redis", "Session Replication")
+    }
+    
+    Container_Boundary(monitoring_stack, "Monitoring Stack") {
+        Container(prometheus, "Prometheus", "Time Series DB", "Metrics Collection")
+        Container(grafana, "Grafana", "Visualization", "Dashboards")
+        Container(elk, "ELK Stack", "Logging", "Log Analysis")
+    }
+}
+
+Rel(load_balancer, keycloak1, "Routes to", "HTTPS")
+Rel(load_balancer, keycloak2, "Routes to", "HTTPS")
+
+Rel(keycloak1, mongodb1, "Writes to", "MongoDB Protocol")
+Rel(keycloak2, mongodb1, "Writes to", "MongoDB Protocol")
+
+Rel(mongodb1, mongodb2, "Replicates to", "MongoDB Protocol")
+
+Rel(keycloak1, redis1, "Caches in", "Redis Protocol")
+Rel(keycloak2, redis1, "Caches in", "Redis Protocol")
+
+Rel(redis1, redis2, "Replicates to", "Redis Protocol")
+
+Rel(keycloak1, prometheus, "Sends metrics to", "Metrics")
+Rel(keycloak2, prometheus, "Sends metrics to", "Metrics")
+
+Rel(prometheus, grafana, "Provides data to", "Metrics")
+Rel(keycloak1, elk, "Sends logs to", "Logs")
+Rel(keycloak2, elk, "Sends logs to", "Logs")
+
+@enduml

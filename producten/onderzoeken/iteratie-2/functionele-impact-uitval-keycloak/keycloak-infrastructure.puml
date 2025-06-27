@@ -1,0 +1,24 @@
+@startuml Keycloak Infrastructure
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Keycloak Infrastructure - System Context
+
+Person(user, "User", "End user accessing applications")
+System_Boundary(keycloak_system, "Keycloak Authentication System") {
+    Container(keycloak, "Keycloak", "Authentication & Authorization", "Provides identity and access management services")
+    Container(load_balancer, "Load Balancer", "HAProxy", "Distributes traffic and provides SSL termination")
+    Container(mongodb, "MongoDB", "Document Database", "Stores user data and configuration")
+    Container(redis, "Redis", "Cache", "Manages sessions and tokens")
+    Container(monitoring, "Monitoring Stack", "Prometheus/Grafana/ELK", "Collects metrics and logs")
+}
+
+Rel(user, load_balancer, "Accesses via", "HTTPS")
+Rel(load_balancer, keycloak, "Routes requests to", "HTTPS")
+Rel(keycloak, mongodb, "Stores data in", "MongoDB Protocol")
+Rel(keycloak, redis, "Caches sessions in", "Redis Protocol")
+Rel(keycloak, monitoring, "Sends metrics to", "Metrics/Logs")
+
+@enduml

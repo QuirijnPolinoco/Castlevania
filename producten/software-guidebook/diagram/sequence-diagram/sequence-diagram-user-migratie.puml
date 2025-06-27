@@ -1,0 +1,43 @@
+@startuml
+actor Client
+participant "DataTransferController" as Controller
+participant "JiraUserParser" as Parser
+participant "KeycloakUserService" as Keycloak
+participant "Jira API" as Jira
+participant "Keycloak API" as KeycloakAPI
+
+Client -> Controller: GET /transferJiraData
+activate Controller
+
+Controller -> Jira: GET /rest/api/2/user/search
+activate Jira
+Jira --> Controller: JSON response with users
+deactivate Jira
+
+Controller -> Parser: parseUsers(JSON)
+activate Parser
+Parser --> Controller: List<UserData>
+deactivate Parser
+
+loop for each user
+    Controller -> Keycloak: createUser(userData)
+    activate Keycloak
+
+    Keycloak -> KeycloakAPI: POST /realms/master/protocol/openid-connect/token
+    activate KeycloakAPI
+    KeycloakAPI --> Keycloak: access_token
+    deactivate KeycloakAPI
+
+    Keycloak -> KeycloakAPI: POST /admin/realms/[realm]/users
+    activate KeycloakAPI
+    KeycloakAPI --> Keycloak: user created response
+    deactivate KeycloakAPI
+
+    Keycloak --> Controller: void
+    deactivate Keycloak
+end
+
+Controller --> Client: List<UserData>
+deactivate Controller
+
+@enduml

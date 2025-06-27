@@ -1,0 +1,19 @@
+@startuml SCIM/API synchronisatie prototype - C4 context diagram
+!include <C4/C4_Context>
+
+title SCIM/API synchronisatie prototype - C4 context diagram
+
+Person(admin, "Admin", "Beheert de applicatie")
+
+System(sync_system, "Synchronisatiesysteem", "Synchroniseert de doelapplicaties met Keycloak")
+
+System_Ext(keycloak, "Keycloak", "Centrale gebruikersbeheerapplicatie")
+System_Ext(gitea, "Gitea", "Zelf gehoste softwareontwikkelingsservice")
+
+admin --> sync_system : "Synchroniseert applicaties"
+
+sync_system --> keycloak : "Haalt data op zoals gebruikers en groepen"
+sync_system --> gitea : "Voegt gebruikers toe aan teams"
+
+SHOW_LEGEND(true)
+@enduml

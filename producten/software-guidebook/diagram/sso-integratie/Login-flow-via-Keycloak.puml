@@ -1,0 +1,25 @@
+@startuml Dynamic Diagram - Jenkins SSO via Keycloak
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml
+
+title Dynamisch Diagram: Authenticatie via Jenkins met Keycloak (SSO Flow)
+
+Person(employee, "Medewerker", "Developer van Bold Digital")
+Container(ha_proxy, "HaProxy", "Load Balancer", "Voert health checks uit tussen Keycloak en externe applicaties")
+Container(keycloak_primary, "Keycloak Primary", "IAM Platform", "Authenticatie en autorisatie applicatie")
+Container(jenkins, "Jenkins", "CI/CD platform", "Een open-source automation server die helpt bij het automatiseren van delen van de software development lifecycle.")
+System_Ext(gitea, "Gitea", "Git repository")
+System_Ext(atlassian, "Atlassian", "Confluence & Jira")
+
+employee -> jenkins : 1. Probeert in te loggen
+jenkins --> ha_proxy : 2. Redirect naar Keycloak via HaProxy
+ha_proxy --> keycloak_primary : 3. Verstuurt authenticatieverzoek
+keycloak_primary -> employee : 4. Login prompt (gebruikersnaam/wachtwoord)
+employee -> keycloak_primary : 5. Voert inlog gegevens in
+keycloak_primary -> keycloak_primary : 6. Checkt of gebruiker bestaat en of de inlog gegevens kloppen
+keycloak_primary -> jenkins : 7. Redirect terug met acces token (OIDC)
+
+jenkins --> keycloak_primary : 8. Aanvraag token exchange voor andere apps
+keycloak_primary --> gitea : 9. Verleent SSO toegang via OAuth2 token exchange
+keycloak_primary --> atlassian : 10. Verleent SSO toegang via OAuth2 token exchange
+
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class TestEventListenerProviderFactory {
+    +TestEventListenerProviderFactory()
+    +create(session)
+    +init(scope)
+    +postInit(factory)
+    +close()
+    +getId(): String
+}
+
+class TestEventListenerProvider {
+    -session
+    -logger
+    +TestEventListenerProvider(session)
+    +onEvent(event)
+    +onEvent(adminEvent, b)
+    +close()
+}
+
+TestEventListenerProviderFactory --> TestEventListenerProvider : creates
+@enduml

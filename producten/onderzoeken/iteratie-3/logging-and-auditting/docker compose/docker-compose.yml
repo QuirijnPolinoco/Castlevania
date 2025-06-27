@@ -1,0 +1,124 @@
+version: "3.8"
+
+networks:
+    testnetwork:
+    monitor:
+        driver: bridge
+
+volumes:
+    postgres_data:
+    gitea_postgres_data:
+
+
+services:
+    keycloak-db:
+        image: postgres:16.2
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: keycloakdb
+            POSTGRES_USER: keycloakdb
+            POSTGRES_PASSWORD: keycloakdb
+        ports:
+            - "5433:5432"
+        networks:
+            - testnetwork
+
+    gitea-db:
+        image: postgres:14
+        container_name: gitea-db
+        restart: always
+        environment:
+            POSTGRES_USER: gitea
+            POSTGRES_PASSWORD: gitea
+            POSTGRES_DB: gitea
+        volumes:
+            - gitea_postgres_data:/var/lib/postgresql/data
+        networks:
+            - testnetwork
+
+    gitea:
+        image: gitea/gitea:1.23.8
+        container_name: gitea
+        restart: always
+        environment:
+            USER_UID: 1000
+            USER_GID: 1000
+            GITEA__database__DB_TYPE: postgres
+            GITEA__database__HOST: gitea-db:5432
+            GITEA__database__NAME: gitea
+            GITEA__database__USER: gitea
+            GITEA__database__PASSWD: gitea
+        volumes:
+            - ./gitea:/data
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        ports:
+            - "3000:3000"
+            - "222:22"
+        depends_on:
+            - gitea-db
+        networks:
+            - testnetwork
+
+    keycloak:
+        image: quay.io/keycloak/keycloak:24.0.3
+        container_name: keycloak
+        volumes:
+            - ./provider/keycloak-event-listener.jar:/opt/keycloak/providers/keycloak-event-listener.jar
+
+        command:
+            - start-dev
+            - --spi-events-listener-provider=test-event-listener
+            - --spi-events-listener-test-event-listener-enabled=true
+        environment:
+            KC_EVENTS_ENABLED: "true"
+            KC_EVENTS_LISTENERS: test-event-listener
+            KEYCLOAK_ADMIN: admin
+            KEYCLOAK_ADMIN_PASSWORD: admin
+            KC_DB: postgres
+            KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloakdb
+            KC_DB_USERNAME: keycloakdb
+            KC_DB_PASSWORD: keycloakdb
+            KC_DB_DATABASE: keycloakdb
+        ports:
+            - "8082:8080"
+        depends_on:
+            - keycloak-db
+        networks:
+            - testnetwork
+
+    loki:
+        image: grafana/loki:2.9.2
+        container_name: loki
+        ports:
+            - "4100:3100"
+        command: -config.file=/etc/loki/local-config.yaml
+        networks:
+            - monitor
+            - testnetwork
+
+    promtail:
+        image: grafana/promtail:2.9.2
+        container_name: promtail
+        volumes:
+            - /var/lib/docker/containers:/var/lib/docker/containers:ro
+            - /var/log:/var/log
+            - ./promtail-config.yaml:/etc/promtail/promtail.yaml
+            - /var/run/docker.sock:/var/run/docker.sock
+        command: -config.file=/etc/promtail/promtail.yaml
+        networks:
+            - monitor
+            - testnetwork
+
+    grafana:
+        image: grafana/grafana:10.4.1
+        container_name: grafana
+        ports:
+            - "4000:3000"
+        networks:
+            - testnetwork
+            - monitor
+        environment:
+            - GF_SECURITY_ADMIN_USER=admin
+            - GF_SECURITY_ADMIN_PASSWORD=admin

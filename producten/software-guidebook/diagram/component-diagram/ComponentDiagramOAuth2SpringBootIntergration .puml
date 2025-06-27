@@ -1,0 +1,23 @@
+
+@startuml
+skinparam componentStyle rectangle
+
+frame "Componentdiagram – OAuth2 Integratie" {
+
+  [Browser / Gebruiker] --> [Spring Boot App] : HTTP (GET /secure)
+
+  [Spring Boot App] --> [SecurityConfig] : configureert\nSecurityFilterChain
+  [Spring Boot App] --> [CustomOidcUserController] : handelt endpoints af
+
+  [Spring Boot App] --> [CustomOidcUserService] : gebruikt bij\nOIDC authenticatie
+  [CustomOidcUserService] --> [OidcUserService] : erft van
+
+  [Spring Boot App] --> [Keycloak] : OAuth2 Redirect + Token Exchange
+  [Keycloak] --> [Spring Boot App] : ID Token + User Info
+
+  [CustomOidcUserService] --> [DefaultOidcUser] : maakt user aan
+  [CustomOidcUserService] --> [SimpleGrantedAuthority] : mapping rollen
+
+}
+
+@enduml

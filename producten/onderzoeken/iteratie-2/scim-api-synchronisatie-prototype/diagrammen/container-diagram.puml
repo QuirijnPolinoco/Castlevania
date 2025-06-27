@@ -1,0 +1,21 @@
+@startuml SCIM/API synchronisatie prototype - C4 container diagram
+!include <C4/C4_Container>
+
+title SCIM/API synchronisatie prototype - C4 container diagram
+
+Person(admin, "Admin", "Beheert de applicatie")
+
+System_Boundary(sync_system, "Synchronisatiesysteem") {
+    Container(sync_system_container, "Synchronisatiesysteem", "Java", "Synchroniseert de doelapplicaties met Keycloak")
+}
+
+System_Ext(keycloak, "Keycloak", "Centrale gebruikersbeheerapplicatie")
+System_Ext(gitea, "Gitea", "Zelf gehoste softwareontwikkelingsservice")
+
+admin --> sync_system_container : "Synchroniseert applicaties"
+
+sync_system_container --> keycloak : "Haalt data op zoals gebruikers en groepen [HTTP/JSON]"
+sync_system_container --> gitea : "Voegt gebruikers toe aan teams [HTTP/JSON]"
+
+SHOW_LEGEND(true)
+@enduml

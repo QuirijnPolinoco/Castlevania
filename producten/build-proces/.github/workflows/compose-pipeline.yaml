@@ -1,0 +1,39 @@
+name: Test Docker-compose
+
+on:
+  push:
+    branches: main
+  pull_request:
+
+jobs:
+  test-compose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate docker-compose.yml
+        run: docker compose -f producten/walking-skeleton/docker-compose.yml config
+
+      - name: Check required files
+        run: |
+          test -f ./producten/walking-skeleton/haproxy.cfg
+          test -f ./producten/walking-skeleton/realm-export.json
+
+      - name: Start services
+        run: docker compose -f producten/walking-skeleton/docker-compose.yml up -d
+
+      - name: Check health of keycloak
+        run: |
+          sleep 30
+          docker ps
+          docker inspect --format='{{json .State.Health}}' keycloak-primary
+          docker inspect --format='{{json .State.Health}}' keycloak-secondary
+          docker inspect --format='{{json .State.Health}}' keycloak-postgres
+
+      - name: Test HAProxy
+        run: curl -sSf http://localhost/realms/master || true
+
+      - name: Tear down
+        if: always()
+        run: docker compose -f producten/walking-skeleton/docker-compose.yml down -v

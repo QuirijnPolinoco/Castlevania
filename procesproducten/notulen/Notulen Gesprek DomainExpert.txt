@@ -1,0 +1,49 @@
+
+Gesprek met Domain expert van BOLD Digital
+
+webapp en apps
+flutter = snel en offline
+ionic - frontend
+
+--------------
+
+Wordt ie in Hr software gediend
+indien process 
+ziet toegang in(Rechten)
+verschilt per ROL
+Word HANDMATIG gedaan per toegang
+
+Keycloak word gebruikt 
+Alle apps voor test en alles rechten nodig 
+backoffices toevoegen aan keycloak zodat ze via kunnen geven
+doen ze NOG niet.
+
+Bedoeling via een systeem kunnen worden geregeld
+Heeft voorkeur aan Keycloak
+Wilt Overzicht hebben van rechten
+
+(Wie is verantwoordelijk)
+HR of DomainExpert
+
+Veel tijd,
+geen overzicht
+
+"Hoe veel rollen hebben jullie?"
+
+25 rollen, medewerker hebben 1 of meerderen rollen.
+
+Frontend dev ,Backend dev en Product owner
+
+ClassFrog laat alle rollen zien en hier heeft iedereen toegang tot.
+
+Authorisation via keycloak?
+
+JA, ze gebruiken UBI-key voor bv pushes die key moet je fysiek hebben.
+
+16:00
+Di 6 mei 
+Teams Call.
+
+Stuur mail als vragen heb.
+
+

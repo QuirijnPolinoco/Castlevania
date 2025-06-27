@@ -1,0 +1,29 @@
+@startuml
+actor Gebruiker
+participant Browser
+participant "Spring Boot App\n(CustomOidcUserController)" as Controller
+participant "Spring Security\n(SecurityFilterChain)" as Security
+participant "CustomOidcUserService" as UserService
+participant "Keycloak (IdP)" as Keycloak
+
+Gebruiker -> Browser : Navigeer naar /secure
+Browser -> Controller : GET /secure
+Controller -> Security : Controleer authenticatie
+
+    Security -> Browser : Redirect naar Keycloak login
+    Browser -> Keycloak : GET /auth?... (login-pagina)
+    Gebruiker -> Keycloak : Voert gebruikersnaam/wachtwoord in
+    Keycloak -> Browser : Redirect naar /login/oauth2/code/keycloak\met auth code
+    Browser -> Security : GET /login/oauth2/code/keycloak?code=abc123
+    Security -> Keycloak : POST /token\n(ruil code voor token)
+    Keycloak -> Security : JWT ID Token + Access Token
+    Security -> UserService : loadUser(OidcUserRequest)
+    UserService -> Keycloak : Ophalen UserInfo (indien nodig)
+    UserService -> UserService : Extract roles from claims
+    UserService -> Security : return OidcUser (met rollen)
+    Security -> Controller : Geef toegang
+
+
+Controller -> Browser : Welkom, gebruiker@example.com
+
+@enduml

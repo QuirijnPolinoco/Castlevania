@@ -1,0 +1,26 @@
+@startuml SCIM/API synchronisatie prototype - C4 component diagram
+!include <C4/C4_Component>
+
+title SCIM/API synchronisatie prototype - C4 component diagram
+
+Person(admin, "Admin", "Beheert de applicatie")
+
+System_Boundary(sync_system, "Synchronisatiesysteem") {
+    Container_Boundary(sync_system_container, "Synchronisatiesysteem") {
+        Component(gitea_sync_controller, "GiteaSyncController", "Java", "Verwerkt de HTTP-verzoeken en roept de onderliggende service aan voor de functionaliteit")
+        Component(gitea_sync_service, "GiteaSyncService", "Java", "Synchroniseert de doelapplicaties met Keycloak")
+    }
+}
+
+System_Ext(keycloak, "Keycloak", "Centrale gebruikersbeheerapplicatie")
+System_Ext(gitea, "Gitea", "Zelf gehoste softwareontwikkelingsservice")
+
+admin --> gitea_sync_controller : "Verstuurt verzoek naar [HTTP]"
+
+gitea_sync_controller --> gitea_sync_service : "Roept de functionaliteit aan van"
+
+gitea_sync_service --> keycloak : "Haalt data op zoals gebruikers en groepen [HTTP/JSON]"
+gitea_sync_service --> gitea : "Voegt gebruikers toe aan teams [HTTP/JSON]"
+
+SHOW_LEGEND(true)
+@enduml

@@ -1,0 +1,28 @@
+name: backend
+on:
+  pull_request:
+    branches:
+      - main
+
+  push:
+    branches:
+      - main
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Set up java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Build
+        working-directory: ./producten/walking-skeleton
+        run: mvn clean compile
+      - name: Package
+        working-directory: ./producten/walking-skeleton
+        run: mvn package -DskipTests
